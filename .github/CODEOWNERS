@@ -1,0 +1,4 @@
+# Protect all security relevant files
+
+.github/CODEOWNERS @operational-context-graph/admin
+renovate.json @operational-context-graph/admin
