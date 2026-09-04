@@ -8,7 +8,7 @@ SPDX-License-Identifier: Apache-2.0
 
 # Operational Context Graph Repository Template
 
-Default templates for Operational Context Graph open source repositories managed by SAP, including LICENSE, .reuse/dep5, Code of Conduct, etc... All repositories on github.com/operational-context-graph will be created based on this template.
+Default template for Operational Context Graph open source repositories managed by SAP. All repositories on github.com/operational-context-graph are created based on this template.
 
 ## To-Do
 
@@ -19,7 +19,7 @@ In case you are the maintainer of a new Operational Context Graph open source pr
 - Enter the correct metadata for the REUSE tool. You can find an initial .reuse/dep5 file to build on. Please replace the parts inside the single angle quotation marks < > by the specific information for your repository and be sure to run the REUSE tool to validate that the metadata is correct.
 - Adjust the contribution guidelines (e.g. add coding style guidelines, pull request checklists, different license if needed etc.)
 - Add information about your project to this README (name, description, requirements etc). Especially take care for the <your-project> placeholders - those ones need to be replaced with your project name. See the sections below the horizontal line and [our guidelines on our wiki page](https://wiki.one.int.sap/wiki/spaces/ospodocs/pages/3564976048/Guidelines+for+GitHub+Health+files+Readme+Contributing+Code+of+Conduct#GuidelinesforGitHubHealthfiles(Readme,Contributing,CodeofConduct)-Readme.md) what is required and recommended.
-- Remove all content in this README above and including the horizontal line ;)
+- Remove all content in this README above and including the horizontal line
 
 ***
 
@@ -35,10 +35,11 @@ In case you are the maintainer of a new Operational Context Graph open source pr
 
 ## Support, Feedback, Contributing
 
-This project is open to feature requests/suggestions, bug reports etc. via [GitHub issues](https://github.com/operational-context-graph/<your-project>/issues). Contribution and feedback are encouraged and always welcome. For more information about how to contribute, the project structure, as well as additional contribution information, see our [Contribution Guidelines](CONTRIBUTING.md).
+This project is open to feature requests/suggestions, bug reports etc. via [GitHub issues](https://github.com/operational-context-graph/repository-template/issues). Contribution and feedback are encouraged and always welcome. For more information about how to contribute, the project structure, as well as additional contribution information, see our [Contribution Guidelines](https://github.com/operational-context-graph/.github/blob/main/CONTRIBUTING.md).
 
 ## Security / Disclosure
-If you find any bug that may be a security problem, please follow our instructions at [in our security policy](https://github.com/operational-context-graph/<your-project>/security/policy) on how to report it. Please do not create GitHub issues for security-related doubts or problems.
+
+If you find any bug that may be a security problem, please follow our instructions at [in our security policy](https://github.com/operational-context-graph/.github/blob/main/SECURITY.md) on how to report it. Please do not create GitHub issues for security-related doubts or problems.
 
 ## Code of Conduct
 
@@ -46,4 +47,4 @@ We as members, contributors, and leaders pledge to make participation in our com
 
 ## Licensing
 
-Copyright 2026 SAP SE or an SAP affiliate company and <your-project> contributors. Please see our [LICENSE](./LICENSE) for copyright and license information. Detailed information including third-party components and their licensing/copyright information is available [via the REUSE tool](https://api.reuse.software/info/github.com/operational-context-graph/<your-project>).
+Copyright 2026 SAP SE or an SAP affiliate company and Operational Context Graph contributors. Please see our [LICENSE](./LICENSE) for copyright and license information. Detailed information including third-party components and their licensing/copyright information is available [via the REUSE tool](https://api.reuse.software/info/github.com/operational-context-graph/repository-template).
