@@ -64,3 +64,20 @@ Each agent profile includes a handoff template. Use it at the end of every sessi
 The security reviewer MUST be the final reviewer for high-risk and design changes.
 
 Architecture decisions and threat models MUST be stored in the project's canonical documentation repository. Agents MUST request its location when it is unavailable.
+
+## Spec-driven development
+
+Use `/sdd-propose` to drive a non-trivial new component from a written spec. The skill runs a failure-mode elicitation, then OpenSpec `/opsx:propose`.
+
+Use it when at least one applies:
+
+- Non-obvious boundary conditions — concurrent access, timeout, retry, partial failure, or ordering invariants.
+- The spec serves as a design document — multiple consumers, a security-relevant interface, or a traceable requirement.
+- The contract is long-lived — it will be extended, versioned, or depended on by other packages.
+- Standards must apply consistently — library choices, security constraints, or patterns.
+
+Skip it when all of these hold: scope is simple and well-bounded, the component is short-lived or throwaway, and no spec artifact is needed downstream. A plain prompt is enough.
+
+Commit `openspec/specs/` and `openspec/config.yaml`. Working artifacts (`openspec/changes/` and `elicitation-*.md`) stay gitignored.
+
+Applying a change is not a review bypass. `/opsx:apply` turns the spec into code — run it under the developer agent and the risk-based workflow above. Choose the change tier, then follow `developer → code-reviewer → verification`, adding the security reviewer as the final reviewer for High and Design tiers.
