@@ -19,7 +19,7 @@ context: |
   FAILURE-MODE ENUMERATION — MANDATORY BEFORE ANY ARTIFACT GENERATION:
   Before writing the spec, proposal, or tasks for any requirement:
     1. List every way it can go wrong:
-       - Concurrent callers: two goroutines calling the same method simultaneously
+       - Concurrent callers: two concurrent callers executing the same method simultaneously
        - Boundary inputs: nil, empty string, zero, max-size, expired entry, single-entry
        - Dependency failures: store unavailable, external service timeout, partial write
        - Partial success: operation half-complete, rollback path needed
@@ -31,7 +31,7 @@ context: |
 
   CLARIFICATION THRESHOLD — LOWER THAN DEFAULT:
   Ask the user to clarify BEFORE generating artifacts when any of these are unclear:
-    - Concurrent access semantics (is the type goroutine-safe? what is the isolation boundary?)
+    - Concurrent access semantics (is the type thread-safe? what is the isolation boundary?)
     - Boundary behaviour (what happens at capacity? eviction order when TTL and LRU compete?)
     - Error return contracts (should errors be wrapped? are sentinel errors expected?)
     - Metric or observability registration (global registry? per-instance? test isolation?)
@@ -50,21 +50,21 @@ rules:
       Every requirement MUST have WHEN/THEN scenarios covering ALL of:
         (a) the happy path (at least one)
         (b) concurrent access or race condition (at least one per shared-state requirement)
-        (c) timeout / error / nil / zero path (at least one per fallible operation)
+        (c) timeout / error / null / zero path (at least one per fallible operation)
         (d) boundary input: empty, overflow, expired, max-size, capacity=1 (at least one each)
       A spec with ZERO error-path or boundary-path scenarios is INCOMPLETE and MUST be
       revised before proceeding to implementation.
     - Every capability must have a testable success signal.
       "works correctly" and "behaves as expected" do not qualify.
     - Constraints must actually change a design decision.
-      Decorative constraints ("must be written in Go") are not permitted.
+      Decorative constraints ("must be implemented in language X") are not permitted.
     - At least one non-goal must be explicit per component spec.
     - Gaps the input did not resolve MUST appear in an explicit open_questions section,
       never silently assumed away.
     - A spec with fewer WHEN/THEN scenarios than (number of requirements × 3) is likely
       incomplete. Count and verify before finalising.
     - Concurrent access — if any method modifies shared state, there MUST be a WHEN/THEN
-      scenario for two goroutines calling that method simultaneously — not just a note.
+      scenario for two concurrent callers executing that method simultaneously — not just a note.
 
   tasks:
     - Every task that implements a shared-state operation MUST have a corresponding
@@ -75,19 +75,24 @@ rules:
 operations:
   apply:
     guidance:
-      - Run go vet ./... after all code is written. Must exit 0.
-      - Run openspec spec validate --strict after all spec files are written.
-      - Every exported method that modifies state MUST have a -race test.
       - |-
-        Coverage gate: go test ./... -race -coverprofile=coverage.out &&
-        go tool cover -func=coverage.out | grep total — must show ≥90%.
+        Run the language's static analysis tool (e.g. `go vet ./...`, `ruff check`,
+        `tsc --noEmit`) after all code is written. Must exit 0.
+      - Run openspec spec validate --strict after all spec files are written.
+      - Every public method that modifies shared state MUST have a concurrency test.
+      - |-
+        Run tests with concurrency/race detection enabled where the runtime supports it
+        (e.g. Go `-race`, thread-sanitizer). Must pass.
+      - |-
+        Coverage gate: run the test suite with coverage reporting using the language's
+        standard tooling. Total coverage MUST be ≥90%.
       - |-
         Semantic review before declaring done:
           1. WHEN/THEN scenario count >= (requirements × 3) — verify
           2. At least one concurrent-access test per shared-state method
-          3. Boundary tests present: nil, empty, zero-value, max-capacity, single-entry
+          3. Boundary tests present: null/nil, empty, zero-value, max-capacity, single-entry
           4. open_questions either resolved in spec or surfaced as code comments
-          5. No global mutable state (package-level vars with side effects)
+          5. No global mutable state with side effects
       - |-
         Implementation ownership: implement applied tasks as the developer agent
         (.claude/agents/developer.md) — follow its coding standards, branch naming,
